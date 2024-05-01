@@ -91,6 +91,7 @@
             // 
             // dataGridViewMatrixA
             // 
+            this.dataGridViewMatrixA.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewMatrixA.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewMatrixA.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewMatrixA.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -108,6 +109,7 @@
             this.buttonFillMatrixA.TabIndex = 1;
             this.buttonFillMatrixA.Text = "Заполнить";
             this.buttonFillMatrixA.UseVisualStyleBackColor = true;
+            this.buttonFillMatrixA.Click += new System.EventHandler(this.buttonFillMatrixA_Click);
             // 
             // numericUpDownColumnsA
             // 
@@ -160,6 +162,7 @@
             // 
             // dataGridViewMatrixB
             // 
+            this.dataGridViewMatrixB.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewMatrixB.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewMatrixB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewMatrixB.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
@@ -177,6 +180,7 @@
             this.buttonFillMatrixB.TabIndex = 1;
             this.buttonFillMatrixB.Text = "Заполнить";
             this.buttonFillMatrixB.UseVisualStyleBackColor = true;
+            this.buttonFillMatrixB.Click += new System.EventHandler(this.buttonFillMatrixB_Click);
             // 
             // numericUpDownColumnsB
             // 

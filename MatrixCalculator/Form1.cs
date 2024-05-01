@@ -16,5 +16,33 @@ namespace MatrixCalculator
         {
             InitializeComponent();
         }
+
+        private void buttonFillMatrixA_Click(object sender, EventArgs e)
+        {
+            int rows = (int)numericUpDownRowsA.Value;
+            int columns = (int)numericUpDownColumnsA.Value;
+
+            dataGridViewMatrixA.Rows.Clear();
+            dataGridViewMatrixA.Columns.Clear();
+
+            if (rows <= 0 || columns <= 0) return;
+
+            dataGridViewMatrixA.RowCount = rows;
+            dataGridViewMatrixA.ColumnCount = columns;
+        }
+
+        private void buttonFillMatrixB_Click(object sender, EventArgs e)
+        {
+            int rows = (int)numericUpDownRowsB.Value;
+            int columns = (int)numericUpDownColumnsB.Value;
+
+            dataGridViewMatrixB.Rows.Clear();
+            dataGridViewMatrixB.Columns.Clear();
+
+            if (rows <= 0 || columns <= 0) return;
+
+            dataGridViewMatrixB.RowCount = rows;
+            dataGridViewMatrixB.ColumnCount = columns;
+        }
     }
 }
