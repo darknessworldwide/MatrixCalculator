@@ -17,6 +17,11 @@ namespace MatrixCalculator
             InitializeComponent();
         }
 
+        private void buttonExit_Click(object sender, EventArgs e)
+        {
+            Close();
+        }
+
         private void buttonFillMatrixA_Click(object sender, EventArgs e)
         {
             int rows = (int)numericUpDownRowsA.Value;
