@@ -362,11 +362,15 @@
             // 
             // dataGridViewResult
             // 
+            this.dataGridViewResult.AllowUserToAddRows = false;
+            this.dataGridViewResult.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewResult.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewResult.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewResult.ColumnHeadersVisible = false;
             this.dataGridViewResult.Location = new System.Drawing.Point(7, 19);
             this.dataGridViewResult.Name = "dataGridViewResult";
+            this.dataGridViewResult.RowHeadersVisible = false;
             this.dataGridViewResult.Size = new System.Drawing.Size(359, 174);
             this.dataGridViewResult.TabIndex = 1;
             // 

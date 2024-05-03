@@ -107,15 +107,48 @@ namespace MatrixCalculator
 
         private void ButtonAddMatrices_Click(object sender, EventArgs e)
         {
-            //int[,] matrix = new int[rows, columns];
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+            int rowsB = dataGridViewMatrixB.RowCount;
+            int columnsB = dataGridViewMatrixB.ColumnCount;
 
-            //for (int i = 0; i < rows; i++)
-            //{
-            //    for (int j = 0; j < columns; j++)
-            //    {
-            //        matrix[i, j] = matrix_A[i, j] + matrix_B[i, j];
-            //    }
-            //}
+            if (rowsA != rowsB || columnsA != columnsB)
+            {
+                MessageBox.Show("Размеры матриц не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int[,] resultMatrix = new int[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    int valueA = Convert.ToInt32(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                    int valueB = Convert.ToInt32(dataGridViewMatrixB.Rows[i].Cells[j].Value);
+                    resultMatrix[i, j] = valueA + valueB;
+                }
+            }
+
+            groupBoxCalculationResult.Text = "Результат вычисления - сложение матриц A и B:";
+            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+        }
+
+        private void ShowResultInDataGridView(int[,] matrix, DataGridView destination)
+        {
+            destination.Rows.Clear();
+            destination.Columns.Clear();
+
+            destination.RowCount = matrix.GetLength(0);
+            destination.ColumnCount = matrix.GetLength(1);
+
+            for (int i = 0; i < destination.RowCount; i++)
+            {
+                for (int j = 0; j < destination.ColumnCount; j++)
+                {
+                    destination.Rows[i].Cells[j].Value = matrix[i, j];
+                }
+            }
         }
     }
 }
