@@ -247,6 +247,7 @@
             this.buttonMultiplyMatrices.Text = "Умножение матриц";
             this.buttonMultiplyMatrices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonMultiplyMatrices.UseVisualStyleBackColor = true;
+            this.buttonMultiplyMatrices.Click += new System.EventHandler(this.buttonMultiplyMatrices_Click);
             // 
             // buttonSubtractMatrices
             // 

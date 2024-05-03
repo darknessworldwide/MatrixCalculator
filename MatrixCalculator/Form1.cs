@@ -163,6 +163,38 @@ namespace MatrixCalculator
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
+        private void buttonMultiplyMatrices_Click(object sender, EventArgs e)
+        {
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+            int rowsB = dataGridViewMatrixB.RowCount;
+            int columnsB = dataGridViewMatrixB.ColumnCount;
+
+            if (columnsA != rowsB)
+            {
+                MessageBox.Show("Количество столбцов матрицы A не совпадает с количеством строк матрицы B.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int[,] resultMatrix = new int[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    for (int k = 0; k < columnsA; k++)
+                    {
+                        int valueA = Convert.ToInt32(dataGridViewMatrixA.Rows[i].Cells[k].Value);
+                        int valueB = Convert.ToInt32(dataGridViewMatrixB.Rows[k].Cells[j].Value);
+                        resultMatrix[i, j] += valueA * valueB;
+                    }
+                }
+            }
+
+            groupBoxCalculationResult.Text = "Результат вычисления - умножение матриц A и B:";
+            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+        }
+
         private void ShowResultInDataGridView(int[,] matrix, DataGridView destination)
         {
             destination.Rows.Clear();
