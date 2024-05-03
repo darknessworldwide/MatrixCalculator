@@ -134,6 +134,35 @@ namespace MatrixCalculator
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
+        private void buttonSubtractMatrices_Click(object sender, EventArgs e)
+        {
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+            int rowsB = dataGridViewMatrixB.RowCount;
+            int columnsB = dataGridViewMatrixB.ColumnCount;
+
+            if (rowsA != rowsB || columnsA != columnsB)
+            {
+                MessageBox.Show("Размеры матриц не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            int[,] resultMatrix = new int[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    int valueA = Convert.ToInt32(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                    int valueB = Convert.ToInt32(dataGridViewMatrixB.Rows[i].Cells[j].Value);
+                    resultMatrix[i, j] = valueA - valueB;
+                }
+            }
+
+            groupBoxCalculationResult.Text = "Результат вычисления - вычитание матриц A и B:";
+            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+        }
+
         private void ShowResultInDataGridView(int[,] matrix, DataGridView destination)
         {
             destination.Rows.Clear();

@@ -260,6 +260,7 @@
             this.buttonSubtractMatrices.Text = "Вычитание матриц";
             this.buttonSubtractMatrices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonSubtractMatrices.UseVisualStyleBackColor = true;
+            this.buttonSubtractMatrices.Click += new System.EventHandler(this.buttonSubtractMatrices_Click);
             // 
             // buttonAddMatrices
             // 
