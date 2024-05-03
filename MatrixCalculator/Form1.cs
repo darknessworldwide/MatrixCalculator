@@ -47,29 +47,33 @@ namespace MatrixCalculator
         private void ButtonArrowDown_Click(object sender, EventArgs e)
         {
             CopyMatrix(dataGridViewMatrixA, dataGridViewMatrixB);
-            numericUpDownRowsB.Value = dataGridViewMatrixB.RowCount;
-            numericUpDownColumnsB.Value = dataGridViewMatrixB.ColumnCount;
+            UpdateNumericUpDownValues();
         }
 
         private void ButtonArrowUpDown_Click(object sender, EventArgs e)
         {
             SwapMatrices();
-            numericUpDownRowsA.Value = dataGridViewMatrixA.RowCount;
-            numericUpDownColumnsA.Value = dataGridViewMatrixA.ColumnCount;
-            numericUpDownRowsB.Value = dataGridViewMatrixB.RowCount;
-            numericUpDownColumnsB.Value = dataGridViewMatrixB.ColumnCount;
+            UpdateNumericUpDownValues();
         }
 
         private void ButtonArrowUp_Click(object sender, EventArgs e)
         {
             CopyMatrix(dataGridViewMatrixB, dataGridViewMatrixA);
-            numericUpDownRowsA.Value = dataGridViewMatrixA.RowCount;
-            numericUpDownColumnsA.Value = dataGridViewMatrixA.ColumnCount;
+            UpdateNumericUpDownValues();
         }
 
         private void ButtonArrowLeft_Click(object sender, EventArgs e)
         {
             CopyMatrix(dataGridViewResult, dataGridViewMatrixB);
+            UpdateNumericUpDownValues();
+        }
+
+        private void UpdateNumericUpDownValues()
+        {
+            numericUpDownRowsA.Value = dataGridViewMatrixA.RowCount;
+            numericUpDownColumnsA.Value = dataGridViewMatrixA.ColumnCount;
+            numericUpDownRowsB.Value = dataGridViewMatrixB.RowCount;
+            numericUpDownColumnsB.Value = dataGridViewMatrixB.ColumnCount;
         }
 
         private void CopyMatrix(DataGridView source, DataGridView destination)
