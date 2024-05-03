@@ -56,10 +56,11 @@
             this.buttonInverseMatrixA = new System.Windows.Forms.Button();
             this.groupBoxCalculationResult = new System.Windows.Forms.GroupBox();
             this.dataGridViewResult = new System.Windows.Forms.DataGridView();
+            this.buttonArrowUp = new System.Windows.Forms.Button();
+            this.buttonArrowDown = new System.Windows.Forms.Button();
+            this.buttonArrowUpDown = new System.Windows.Forms.Button();
+            this.buttonArrowLeft = new System.Windows.Forms.Button();
             this.buttonExit = new System.Windows.Forms.Button();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
             this.groupBoxMatrixA.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridViewMatrixA)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDownColumnsA)).BeginInit();
@@ -91,12 +92,15 @@
             // 
             // dataGridViewMatrixA
             // 
+            this.dataGridViewMatrixA.AllowUserToAddRows = false;
             this.dataGridViewMatrixA.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewMatrixA.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewMatrixA.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewMatrixA.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMatrixA.ColumnHeadersVisible = false;
             this.dataGridViewMatrixA.Location = new System.Drawing.Point(6, 40);
             this.dataGridViewMatrixA.Name = "dataGridViewMatrixA";
+            this.dataGridViewMatrixA.RowHeadersVisible = false;
             this.dataGridViewMatrixA.Size = new System.Drawing.Size(359, 153);
             this.dataGridViewMatrixA.TabIndex = 1;
             // 
@@ -162,12 +166,15 @@
             // 
             // dataGridViewMatrixB
             // 
+            this.dataGridViewMatrixB.AllowUserToAddRows = false;
             this.dataGridViewMatrixB.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.dataGridViewMatrixB.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewMatrixB.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewMatrixB.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridViewMatrixB.ColumnHeadersVisible = false;
             this.dataGridViewMatrixB.Location = new System.Drawing.Point(6, 40);
             this.dataGridViewMatrixB.Name = "dataGridViewMatrixB";
+            this.dataGridViewMatrixB.RowHeadersVisible = false;
             this.dataGridViewMatrixB.Size = new System.Drawing.Size(359, 153);
             this.dataGridViewMatrixB.TabIndex = 1;
             // 
@@ -221,7 +228,7 @@
             this.groupBoxMatrixOperations.Controls.Add(this.buttonMultiplyMatrices);
             this.groupBoxMatrixOperations.Controls.Add(this.buttonSubtractMatrices);
             this.groupBoxMatrixOperations.Controls.Add(this.buttonAddMatrices);
-            this.groupBoxMatrixOperations.Location = new System.Drawing.Point(392, 12);
+            this.groupBoxMatrixOperations.Location = new System.Drawing.Point(394, 12);
             this.groupBoxMatrixOperations.Name = "groupBoxMatrixOperations";
             this.groupBoxMatrixOperations.Size = new System.Drawing.Size(401, 50);
             this.groupBoxMatrixOperations.TabIndex = 2;
@@ -231,32 +238,42 @@
             // buttonMultiplyMatrices
             // 
             this.buttonMultiplyMatrices.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonMultiplyMatrices.Image = global::MatrixCalculator.Properties.Resources.multiplication;
+            this.buttonMultiplyMatrices.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonMultiplyMatrices.Location = new System.Drawing.Point(268, 19);
             this.buttonMultiplyMatrices.Name = "buttonMultiplyMatrices";
-            this.buttonMultiplyMatrices.Size = new System.Drawing.Size(125, 23);
+            this.buttonMultiplyMatrices.Size = new System.Drawing.Size(128, 23);
             this.buttonMultiplyMatrices.TabIndex = 4;
             this.buttonMultiplyMatrices.Text = "Умножение матриц";
+            this.buttonMultiplyMatrices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonMultiplyMatrices.UseVisualStyleBackColor = true;
             // 
             // buttonSubtractMatrices
             // 
             this.buttonSubtractMatrices.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonSubtractMatrices.Image = global::MatrixCalculator.Properties.Resources.subtraction;
+            this.buttonSubtractMatrices.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonSubtractMatrices.Location = new System.Drawing.Point(137, 19);
             this.buttonSubtractMatrices.Name = "buttonSubtractMatrices";
-            this.buttonSubtractMatrices.Size = new System.Drawing.Size(125, 23);
+            this.buttonSubtractMatrices.Size = new System.Drawing.Size(128, 23);
             this.buttonSubtractMatrices.TabIndex = 4;
             this.buttonSubtractMatrices.Text = "Вычитание матриц";
+            this.buttonSubtractMatrices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonSubtractMatrices.UseVisualStyleBackColor = true;
             // 
             // buttonAddMatrices
             // 
             this.buttonAddMatrices.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonAddMatrices.Image = global::MatrixCalculator.Properties.Resources.addition;
+            this.buttonAddMatrices.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
             this.buttonAddMatrices.Location = new System.Drawing.Point(6, 19);
             this.buttonAddMatrices.Name = "buttonAddMatrices";
-            this.buttonAddMatrices.Size = new System.Drawing.Size(125, 23);
+            this.buttonAddMatrices.Size = new System.Drawing.Size(128, 23);
             this.buttonAddMatrices.TabIndex = 3;
             this.buttonAddMatrices.Text = "Сложение матриц";
+            this.buttonAddMatrices.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
             this.buttonAddMatrices.UseVisualStyleBackColor = true;
+            this.buttonAddMatrices.Click += new System.EventHandler(this.ButtonAddMatrices_Click);
             // 
             // groupBoxMatrixAOperations
             // 
@@ -266,7 +283,7 @@
             this.groupBoxMatrixAOperations.Controls.Add(this.buttonRankMatrixA);
             this.groupBoxMatrixAOperations.Controls.Add(this.buttonTransposeMatrixA);
             this.groupBoxMatrixAOperations.Controls.Add(this.buttonInverseMatrixA);
-            this.groupBoxMatrixAOperations.Location = new System.Drawing.Point(392, 82);
+            this.groupBoxMatrixAOperations.Location = new System.Drawing.Point(394, 82);
             this.groupBoxMatrixAOperations.Name = "groupBoxMatrixAOperations";
             this.groupBoxMatrixAOperations.Size = new System.Drawing.Size(401, 82);
             this.groupBoxMatrixAOperations.TabIndex = 3;
@@ -336,7 +353,7 @@
             // groupBoxCalculationResult
             // 
             this.groupBoxCalculationResult.Controls.Add(this.dataGridViewResult);
-            this.groupBoxCalculationResult.Location = new System.Drawing.Point(411, 207);
+            this.groupBoxCalculationResult.Location = new System.Drawing.Point(420, 208);
             this.groupBoxCalculationResult.Name = "groupBoxCalculationResult";
             this.groupBoxCalculationResult.Size = new System.Drawing.Size(374, 209);
             this.groupBoxCalculationResult.TabIndex = 4;
@@ -348,17 +365,61 @@
             this.dataGridViewResult.BackgroundColor = System.Drawing.Color.White;
             this.dataGridViewResult.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dataGridViewResult.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridViewResult.Location = new System.Drawing.Point(6, 19);
+            this.dataGridViewResult.Location = new System.Drawing.Point(7, 19);
             this.dataGridViewResult.Name = "dataGridViewResult";
             this.dataGridViewResult.Size = new System.Drawing.Size(359, 174);
             this.dataGridViewResult.TabIndex = 1;
+            // 
+            // buttonArrowUp
+            // 
+            this.buttonArrowUp.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonArrowUp.Image = ((System.Drawing.Image)(resources.GetObject("buttonArrowUp.Image")));
+            this.buttonArrowUp.Location = new System.Drawing.Point(232, 226);
+            this.buttonArrowUp.Name = "buttonArrowUp";
+            this.buttonArrowUp.Size = new System.Drawing.Size(28, 28);
+            this.buttonArrowUp.TabIndex = 11;
+            this.buttonArrowUp.UseVisualStyleBackColor = true;
+            this.buttonArrowUp.Click += new System.EventHandler(this.ButtonArrowUp_Click);
+            // 
+            // buttonArrowDown
+            // 
+            this.buttonArrowDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonArrowDown.Image = ((System.Drawing.Image)(resources.GetObject("buttonArrowDown.Image")));
+            this.buttonArrowDown.Location = new System.Drawing.Point(126, 226);
+            this.buttonArrowDown.Name = "buttonArrowDown";
+            this.buttonArrowDown.Size = new System.Drawing.Size(28, 28);
+            this.buttonArrowDown.TabIndex = 10;
+            this.buttonArrowDown.UseVisualStyleBackColor = true;
+            this.buttonArrowDown.Click += new System.EventHandler(this.ButtonArrowDown_Click);
+            // 
+            // buttonArrowUpDown
+            // 
+            this.buttonArrowUpDown.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonArrowUpDown.Image = global::MatrixCalculator.Properties.Resources.arrow_up_down;
+            this.buttonArrowUpDown.Location = new System.Drawing.Point(179, 226);
+            this.buttonArrowUpDown.Name = "buttonArrowUpDown";
+            this.buttonArrowUpDown.Size = new System.Drawing.Size(28, 28);
+            this.buttonArrowUpDown.TabIndex = 9;
+            this.buttonArrowUpDown.UseVisualStyleBackColor = true;
+            this.buttonArrowUpDown.Click += new System.EventHandler(this.ButtonArrowUpDown_Click);
+            // 
+            // buttonArrowLeft
+            // 
+            this.buttonArrowLeft.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.buttonArrowLeft.Image = global::MatrixCalculator.Properties.Resources.arrow_left;
+            this.buttonArrowLeft.Location = new System.Drawing.Point(389, 310);
+            this.buttonArrowLeft.Name = "buttonArrowLeft";
+            this.buttonArrowLeft.Size = new System.Drawing.Size(28, 28);
+            this.buttonArrowLeft.TabIndex = 8;
+            this.buttonArrowLeft.UseVisualStyleBackColor = true;
+            this.buttonArrowLeft.Click += new System.EventHandler(this.ButtonArrowLeft_Click);
             // 
             // buttonExit
             // 
             this.buttonExit.Cursor = System.Windows.Forms.Cursors.Hand;
             this.buttonExit.Image = global::MatrixCalculator.Properties.Resources.exit_icon;
             this.buttonExit.ImageAlign = System.Drawing.ContentAlignment.MiddleLeft;
-            this.buttonExit.Location = new System.Drawing.Point(727, 437);
+            this.buttonExit.Location = new System.Drawing.Point(729, 437);
             this.buttonExit.Name = "buttonExit";
             this.buttonExit.Size = new System.Drawing.Size(66, 29);
             this.buttonExit.TabIndex = 5;
@@ -367,44 +428,15 @@
             this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
-            // button1
-            // 
-            this.button1.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button1.Image = global::MatrixCalculator.Properties.Resources.arrow_down;
-            this.button1.Location = new System.Drawing.Point(168, 227);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(25, 25);
-            this.button1.TabIndex = 6;
-            this.button1.UseVisualStyleBackColor = true;
-            // 
-            // button2
-            // 
-            this.button2.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button2.Image = global::MatrixCalculator.Properties.Resources.arrow_up;
-            this.button2.Location = new System.Drawing.Point(202, 227);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(25, 25);
-            this.button2.TabIndex = 7;
-            this.button2.UseVisualStyleBackColor = true;
-            // 
-            // button3
-            // 
-            this.button3.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.button3.Image = global::MatrixCalculator.Properties.Resources.arrow_left;
-            this.button3.Location = new System.Drawing.Point(386, 309);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(25, 25);
-            this.button3.TabIndex = 8;
-            this.button3.UseVisualStyleBackColor = true;
-            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(805, 478);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.buttonArrowUp);
+            this.Controls.Add(this.buttonArrowDown);
+            this.Controls.Add(this.buttonArrowUpDown);
+            this.Controls.Add(this.buttonArrowLeft);
             this.Controls.Add(this.buttonExit);
             this.Controls.Add(this.groupBoxCalculationResult);
             this.Controls.Add(this.groupBoxMatrixAOperations);
@@ -414,6 +446,7 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Матричный калькулятор";
             this.groupBoxMatrixA.ResumeLayout(false);
             this.groupBoxMatrixA.PerformLayout();
@@ -463,9 +496,10 @@
         private System.Windows.Forms.GroupBox groupBoxCalculationResult;
         private System.Windows.Forms.DataGridView dataGridViewResult;
         private System.Windows.Forms.Button buttonExit;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button buttonArrowLeft;
+        private System.Windows.Forms.Button buttonArrowUpDown;
+        private System.Windows.Forms.Button buttonArrowDown;
+        private System.Windows.Forms.Button buttonArrowUp;
     }
 }
 
