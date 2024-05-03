@@ -78,7 +78,11 @@ namespace MatrixCalculator
 
         private void CopyMatrix(DataGridView source, DataGridView destination)
         {
-            if (source.RowCount == 0 && source.ColumnCount == 0) return;
+            if (source.RowCount == 0 || source.ColumnCount == 0)
+            {
+                destination.Rows.Clear();
+                return;
+            }
 
             destination.RowCount = source.RowCount;
             destination.ColumnCount = source.ColumnCount;
