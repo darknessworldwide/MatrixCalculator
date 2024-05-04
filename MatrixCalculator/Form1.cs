@@ -37,6 +37,7 @@ namespace MatrixCalculator
             if (rows <= 0 || columns <= 0)
             {
                 matrix.Rows.Clear();
+                matrix.Columns.Clear();
                 return;
             }
 
@@ -81,6 +82,7 @@ namespace MatrixCalculator
             if (source.RowCount == 0 || source.ColumnCount == 0)
             {
                 destination.Rows.Clear();
+                destination.Columns.Clear();
                 return;
             }
 
@@ -103,6 +105,8 @@ namespace MatrixCalculator
             CopyMatrix(dataGridViewMatrixA, temp);
             CopyMatrix(dataGridViewMatrixB, dataGridViewMatrixA);
             CopyMatrix(temp, dataGridViewMatrixB);
+
+            UpdateNumericUpDownValues();
         }
 
         private void ButtonAddMatrices_Click(object sender, EventArgs e)
