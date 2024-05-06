@@ -103,6 +103,7 @@
             this.dataGridViewMatrixA.RowHeadersVisible = false;
             this.dataGridViewMatrixA.Size = new System.Drawing.Size(359, 153);
             this.dataGridViewMatrixA.TabIndex = 1;
+            this.dataGridViewMatrixA.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewMatrixA_CellValidating);
             // 
             // buttonFillMatrixA
             // 
@@ -177,6 +178,7 @@
             this.dataGridViewMatrixB.RowHeadersVisible = false;
             this.dataGridViewMatrixB.Size = new System.Drawing.Size(359, 153);
             this.dataGridViewMatrixB.TabIndex = 1;
+            this.dataGridViewMatrixB.CellValidating += new System.Windows.Forms.DataGridViewCellValidatingEventHandler(this.dataGridViewMatrixB_CellValidating);
             // 
             // buttonFillMatrixB
             // 

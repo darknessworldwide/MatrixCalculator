@@ -122,14 +122,14 @@ namespace MatrixCalculator
                 return;
             }
 
-            int[,] resultMatrix = new int[rowsA, columnsA];
+            double[,] resultMatrix = new double[rowsA, columnsA];
 
             for (int i = 0; i < rowsA; i++)
             {
                 for (int j = 0; j < columnsA; j++)
                 {
-                    int valueA = Convert.ToInt32(dataGridViewMatrixA.Rows[i].Cells[j].Value);
-                    int valueB = Convert.ToInt32(dataGridViewMatrixB.Rows[i].Cells[j].Value);
+                    double valueA = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                    double valueB = Convert.ToDouble(dataGridViewMatrixB.Rows[i].Cells[j].Value);
                     resultMatrix[i, j] = valueA + valueB;
                 }
             }
@@ -151,14 +151,14 @@ namespace MatrixCalculator
                 return;
             }
 
-            int[,] resultMatrix = new int[rowsA, columnsA];
+            double[,] resultMatrix = new double[rowsA, columnsA];
 
             for (int i = 0; i < rowsA; i++)
             {
                 for (int j = 0; j < columnsA; j++)
                 {
-                    int valueA = Convert.ToInt32(dataGridViewMatrixA.Rows[i].Cells[j].Value);
-                    int valueB = Convert.ToInt32(dataGridViewMatrixB.Rows[i].Cells[j].Value);
+                    double valueA = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                    double valueB = Convert.ToDouble(dataGridViewMatrixB.Rows[i].Cells[j].Value);
                     resultMatrix[i, j] = valueA - valueB;
                 }
             }
@@ -180,7 +180,7 @@ namespace MatrixCalculator
                 return;
             }
 
-            int[,] resultMatrix = new int[rowsA, columnsB];
+            double[,] resultMatrix = new double[rowsA, columnsB];
 
             for (int i = 0; i < rowsA; i++)
             {
@@ -188,8 +188,8 @@ namespace MatrixCalculator
                 {
                     for (int k = 0; k < columnsA; k++)
                     {
-                        int valueA = Convert.ToInt32(dataGridViewMatrixA.Rows[i].Cells[k].Value);
-                        int valueB = Convert.ToInt32(dataGridViewMatrixB.Rows[k].Cells[j].Value);
+                        double valueA = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[k].Value);
+                        double valueB = Convert.ToDouble(dataGridViewMatrixB.Rows[k].Cells[j].Value);
                         resultMatrix[i, j] += valueA * valueB;
                     }
                 }
@@ -199,7 +199,7 @@ namespace MatrixCalculator
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
-        private void ShowResultInDataGridView(int[,] matrix, DataGridView destination)
+        private void ShowResultInDataGridView(double[,] matrix, DataGridView destination)
         {
             if (matrix.Length == 0)
             {
@@ -219,6 +219,26 @@ namespace MatrixCalculator
                     destination.Rows[i].Cells[j].Value = matrix[i, j];
                 }
             }
+        }
+
+        private void dataGridViewMatrixA_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            string input = e.FormattedValue.ToString();
+
+            if (input == "")
+            {
+                e.Cancel = false;
+            }
+            else if (!double.TryParse(input, out double result))
+            {
+                e.Cancel = true;
+                MessageBox.Show("Введите корректное число!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+            }
+        }
+
+        private void dataGridViewMatrixB_CellValidating(object sender, DataGridViewCellValidatingEventArgs e)
+        {
+            dataGridViewMatrixA_CellValidating(sender, e);
         }
     }
 }
