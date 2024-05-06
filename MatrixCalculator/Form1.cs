@@ -8,6 +8,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
+using MathNet.Numerics.LinearAlgebra;
+using MathNet.Numerics.LinearAlgebra.Double;
+
 namespace MatrixCalculator
 {
     public partial class Form1 : Form
@@ -199,6 +202,36 @@ namespace MatrixCalculator
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
+        private void buttonInverseMatrixA_Click(object sender, EventArgs e)
+        {
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+            double[,] resultMatrix = new double[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    resultMatrix[i, j] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                }
+            }
+
+            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
+            Matrix<double> inverseMatrixA;
+            try
+            {
+                inverseMatrixA = matrixA.Inverse();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Ошибка при вычислении обратной матрицы A: {ex.Message}", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
+            groupBoxCalculationResult.Text = "Результат вычисления - обратная матрице A, матрица:";
+            ShowResultInDataGridView(inverseMatrixA.ToArray(), dataGridViewResult);
+        }
+
         private void ShowResultInDataGridView(double[,] matrix, DataGridView destination)
         {
             if (matrix.Length == 0)
@@ -216,7 +249,7 @@ namespace MatrixCalculator
             {
                 for (int j = 0; j < destination.ColumnCount; j++)
                 {
-                    destination.Rows[i].Cells[j].Value = matrix[i, j];
+                    destination.Rows[i].Cells[j].Value = Math.Round(matrix[i, j], 3);
                 }
             }
         }

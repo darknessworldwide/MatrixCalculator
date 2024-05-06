@@ -353,6 +353,7 @@
             this.buttonInverseMatrixA.TabIndex = 4;
             this.buttonInverseMatrixA.Text = "Обратная матрица";
             this.buttonInverseMatrixA.UseVisualStyleBackColor = true;
+            this.buttonInverseMatrixA.Click += new System.EventHandler(this.buttonInverseMatrixA_Click);
             // 
             // groupBoxCalculationResult
             // 
