@@ -323,6 +323,7 @@
             this.buttonDeterminantMatrixA.TabIndex = 4;
             this.buttonDeterminantMatrixA.Text = "Определитель";
             this.buttonDeterminantMatrixA.UseVisualStyleBackColor = true;
+            this.buttonDeterminantMatrixA.Click += new System.EventHandler(this.buttonDeterminantMatrixA_Click);
             // 
             // buttonRankMatrixA
             // 

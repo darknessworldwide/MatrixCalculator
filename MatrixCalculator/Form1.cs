@@ -273,9 +273,31 @@ namespace MatrixCalculator
             ShowResultInDataGridView(rankMatrixA, dataGridViewResult);
         }
 
+        private void buttonDeterminantMatrixA_Click(object sender, EventArgs e)
+        {
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            double[,] resultMatrix = new double[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    resultMatrix[i, j] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                }
+            }
+
+            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
+            double determinantMatrixA = matrixA.Determinant();
+
+            groupBoxCalculationResult.Text = "Результат вычисления - определитель матрицы A равен:";
+            ShowResultInDataGridView(determinantMatrixA, dataGridViewResult);
+        }
+
         private void ShowResultInDataGridView<T>(T value, DataGridView destination)
         {
-            if (typeof(T) == typeof(int))
+            if (typeof(T) == typeof(int) || typeof(T) == typeof(double))
             {
                 destination.Rows.Clear();
                 destination.Columns.Clear();
