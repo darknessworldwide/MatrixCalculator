@@ -295,6 +295,32 @@ namespace MatrixCalculator
             ShowResultInDataGridView(determinantMatrixA, dataGridViewResult);
         }
 
+        private void buttonMinorMatrixA_Click(object sender, EventArgs e)
+        {
+            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
+            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
+
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            double[,] resultMatrix = new double[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    resultMatrix[i, j] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                }
+            }
+
+            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
+            Matrix<double> minorMatrix = matrixA.RemoveRow(rowIndex).RemoveColumn(columnIndex);
+            double minor = minorMatrix.Determinant();
+
+            groupBoxCalculationResult.Text = "Результат вычисления - минор элемента матрицы A равен:";
+            ShowResultInDataGridView(minor, dataGridViewResult);
+        }
+
         private void ShowResultInDataGridView<T>(T value, DataGridView destination)
         {
             if (typeof(T) == typeof(int) || typeof(T) == typeof(double))

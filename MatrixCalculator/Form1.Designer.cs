@@ -313,6 +313,7 @@
             this.buttonMinorMatrixA.TabIndex = 4;
             this.buttonMinorMatrixA.Text = "Минор элемента";
             this.buttonMinorMatrixA.UseVisualStyleBackColor = true;
+            this.buttonMinorMatrixA.Click += new System.EventHandler(this.buttonMinorMatrixA_Click);
             // 
             // buttonDeterminantMatrixA
             // 
