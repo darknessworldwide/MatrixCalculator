@@ -303,6 +303,7 @@
             this.buttonMultiplyMatrixAByNumber.TabIndex = 4;
             this.buttonMultiplyMatrixAByNumber.Text = "Умножить на число";
             this.buttonMultiplyMatrixAByNumber.UseVisualStyleBackColor = true;
+            this.buttonMultiplyMatrixAByNumber.Click += new System.EventHandler(this.buttonMultiplyMatrixAByNumber_Click);
             // 
             // buttonMinorMatrixA
             // 
