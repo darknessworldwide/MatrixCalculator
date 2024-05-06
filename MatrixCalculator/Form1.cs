@@ -204,6 +204,8 @@ namespace MatrixCalculator
             if (matrix.Length == 0)
             {
                 groupBoxCalculationResult.Text = "Результат вычисления -";
+                destination.Rows.Clear();
+                destination.Columns.Clear();
                 return;
             }
 
