@@ -251,24 +251,60 @@ namespace MatrixCalculator
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
-        private void ShowResultInDataGridView(double[,] matrix, DataGridView destination)
+        private void buttonRankMatrixA_Click(object sender, EventArgs e)
         {
-            if (matrix.Length == 0)
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            double[,] resultMatrix = new double[rowsA, columnsA];
+
+            for (int i = 0; i < rowsA; i++)
             {
-                groupBoxCalculationResult.Text = "Результат вычисления -";
-                destination.Rows.Clear();
-                destination.Columns.Clear();
-                return;
+                for (int j = 0; j < columnsA; j++)
+                {
+                    resultMatrix[i, j] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                }
             }
 
-            destination.RowCount = matrix.GetLength(0);
-            destination.ColumnCount = matrix.GetLength(1);
+            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
+            int rankMatrixA = matrixA.Rank();
 
-            for (int i = 0; i < destination.RowCount; i++)
+            groupBoxCalculationResult.Text = "Результат вычисления - ранг матрицы A равен:";
+            ShowResultInDataGridView(rankMatrixA, dataGridViewResult);
+        }
+
+        private void ShowResultInDataGridView<T>(T value, DataGridView destination)
+        {
+            if (typeof(T) == typeof(int))
             {
-                for (int j = 0; j < destination.ColumnCount; j++)
+                destination.Rows.Clear();
+                destination.Columns.Clear();
+
+                destination.RowCount = 1;
+                destination.ColumnCount = 1;
+                destination.Rows[0].Cells[0].Value = value;
+            }
+            else if (typeof(T) == typeof(double[,]))
+            {
+                double[,] matrix = value as double[,];
+
+                if (matrix.Length == 0)
                 {
-                    destination.Rows[i].Cells[j].Value = Math.Round(matrix[i, j], 3);
+                    groupBoxCalculationResult.Text = "Результат вычисления -";
+                    destination.Rows.Clear();
+                    destination.Columns.Clear();
+                    return;
+                }
+
+                destination.RowCount = matrix.GetLength(0);
+                destination.ColumnCount = matrix.GetLength(1);
+
+                for (int i = 0; i < destination.RowCount; i++)
+                {
+                    for (int j = 0; j < destination.ColumnCount; j++)
+                    {
+                        destination.Rows[i].Cells[j].Value = Math.Round(matrix[i, j], 3);
+                    }
                 }
             }
         }

@@ -333,6 +333,7 @@
             this.buttonRankMatrixA.TabIndex = 4;
             this.buttonRankMatrixA.Text = "Ранг матрицы";
             this.buttonRankMatrixA.UseVisualStyleBackColor = true;
+            this.buttonRankMatrixA.Click += new System.EventHandler(this.buttonRankMatrixA_Click);
             // 
             // buttonTransposeMatrixA
             // 
