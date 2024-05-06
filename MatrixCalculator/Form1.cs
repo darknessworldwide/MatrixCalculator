@@ -19,7 +19,7 @@ namespace MatrixCalculator
 
         private void buttonExit_Click(object sender, EventArgs e)
         {
-            Close();
+            Application.Exit();
         }
 
         private void buttonFillMatrixA_Click(object sender, EventArgs e)
@@ -34,7 +34,7 @@ namespace MatrixCalculator
 
         private void FillMatrix(int rows, int columns, DataGridView matrix)
         {
-            if (rows <= 0 || columns <= 0)
+            if (rows == 0 || columns == 0)
             {
                 matrix.Rows.Clear();
                 matrix.Columns.Clear();
@@ -79,12 +79,12 @@ namespace MatrixCalculator
 
         private void CopyMatrix(DataGridView source, DataGridView destination)
         {
-            if (source.RowCount == 0 || source.ColumnCount == 0)
-            {
-                destination.Rows.Clear();
-                destination.Columns.Clear();
-                return;
-            }
+            //if (source.RowCount == 0 || source.ColumnCount == 0)
+            //{
+            //    destination.Rows.Clear();
+            //    destination.Columns.Clear();
+            //    return;
+            //}
 
             destination.RowCount = source.RowCount;
             destination.ColumnCount = source.ColumnCount;
@@ -118,7 +118,7 @@ namespace MatrixCalculator
 
             if (rowsA != rowsB || columnsA != columnsB)
             {
-                MessageBox.Show("Размеры матриц не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Размеры матриц не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -134,7 +134,7 @@ namespace MatrixCalculator
                 }
             }
 
-            groupBoxCalculationResult.Text = "Результат вычисления - сложение матриц A и B:";
+            groupBoxCalculationResult.Text = "Результат вычисления - сумма матриц A и B:";
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
@@ -147,7 +147,7 @@ namespace MatrixCalculator
 
             if (rowsA != rowsB || columnsA != columnsB)
             {
-                MessageBox.Show("Размеры матриц не совпадают.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Размеры матриц не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
@@ -163,7 +163,7 @@ namespace MatrixCalculator
                 }
             }
 
-            groupBoxCalculationResult.Text = "Результат вычисления - вычитание матриц A и B:";
+            groupBoxCalculationResult.Text = "Результат вычисления - разность матриц A и B:";
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
@@ -176,15 +176,15 @@ namespace MatrixCalculator
 
             if (columnsA != rowsB)
             {
-                MessageBox.Show("Количество столбцов матрицы A не совпадает с количеством строк матрицы B.", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                MessageBox.Show("Количество столбцов матрицы A не совпадает с количеством строк матрицы B!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
                 return;
             }
 
-            int[,] resultMatrix = new int[rowsA, columnsA];
+            int[,] resultMatrix = new int[rowsA, columnsB];
 
             for (int i = 0; i < rowsA; i++)
             {
-                for (int j = 0; j < columnsA; j++)
+                for (int j = 0; j < columnsB; j++)
                 {
                     for (int k = 0; k < columnsA; k++)
                     {
@@ -195,14 +195,14 @@ namespace MatrixCalculator
                 }
             }
 
-            groupBoxCalculationResult.Text = "Результат вычисления - умножение матриц A и B:";
+            groupBoxCalculationResult.Text = "Результат вычисления - произведение матриц A и B:";
             ShowResultInDataGridView(resultMatrix, dataGridViewResult);
         }
 
         private void ShowResultInDataGridView(int[,] matrix, DataGridView destination)
         {
-            destination.Rows.Clear();
-            destination.Columns.Clear();
+            //destination.Rows.Clear();
+            //destination.Columns.Clear();
 
             destination.RowCount = matrix.GetLength(0);
             destination.ColumnCount = matrix.GetLength(1);
