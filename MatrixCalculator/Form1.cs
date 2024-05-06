@@ -79,12 +79,12 @@ namespace MatrixCalculator
 
         private void CopyMatrix(DataGridView source, DataGridView destination)
         {
-            //if (source.RowCount == 0 || source.ColumnCount == 0)
-            //{
-            //    destination.Rows.Clear();
-            //    destination.Columns.Clear();
-            //    return;
-            //}
+            if (source.RowCount == 0 || source.ColumnCount == 0)
+            {
+                destination.Rows.Clear();
+                destination.Columns.Clear();
+                return;
+            }
 
             destination.RowCount = source.RowCount;
             destination.ColumnCount = source.ColumnCount;
@@ -201,8 +201,11 @@ namespace MatrixCalculator
 
         private void ShowResultInDataGridView(int[,] matrix, DataGridView destination)
         {
-            //destination.Rows.Clear();
-            //destination.Columns.Clear();
+            if (matrix.Length == 0)
+            {
+                groupBoxCalculationResult.Text = "Результат вычисления -";
+                return;
+            }
 
             destination.RowCount = matrix.GetLength(0);
             destination.ColumnCount = matrix.GetLength(1);

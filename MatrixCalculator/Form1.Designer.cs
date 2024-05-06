@@ -360,7 +360,7 @@
             this.groupBoxCalculationResult.Size = new System.Drawing.Size(374, 209);
             this.groupBoxCalculationResult.TabIndex = 4;
             this.groupBoxCalculationResult.TabStop = false;
-            this.groupBoxCalculationResult.Text = "Результат вычисления:";
+            this.groupBoxCalculationResult.Text = "Результат вычисления -";
             // 
             // dataGridViewResult
             // 
