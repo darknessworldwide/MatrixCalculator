@@ -232,6 +232,25 @@ namespace MatrixCalculator
             ShowResultInDataGridView(inverseMatrixA.ToArray(), dataGridViewResult);
         }
 
+        private void buttonTransposeMatrixA_Click(object sender, EventArgs e)
+        {
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            double[,] resultMatrix = new double[columnsA, rowsA];
+
+            for (int i = 0; i < rowsA; i++)
+            {
+                for (int j = 0; j < columnsA; j++)
+                {
+                    resultMatrix[j, i] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
+                }
+            }
+
+            groupBoxCalculationResult.Text = "Результат вычисления - транспонированная матрица A:";
+            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+        }
+
         private void ShowResultInDataGridView(double[,] matrix, DataGridView destination)
         {
             if (matrix.Length == 0)

@@ -343,6 +343,7 @@
             this.buttonTransposeMatrixA.TabIndex = 4;
             this.buttonTransposeMatrixA.Text = "Транспонирование";
             this.buttonTransposeMatrixA.UseVisualStyleBackColor = true;
+            this.buttonTransposeMatrixA.Click += new System.EventHandler(this.buttonTransposeMatrixA_Click);
             // 
             // buttonInverseMatrixA
             // 
