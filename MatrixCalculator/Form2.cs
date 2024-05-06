@@ -18,6 +18,7 @@ namespace MatrixCalculator
         {
             InitializeComponent();
             Number = 0;
+            numericUpDownMultiplyByNumber.Maximum = Decimal.MaxValue;
         }
 
         private void buttonOK_Click(object sender, EventArgs e)
