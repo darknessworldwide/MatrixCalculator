@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.Drawing.Drawing2D;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -365,12 +366,37 @@ namespace MatrixCalculator
                 }
             }
 
-            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
-            Matrix<double> minorMatrix = matrixA.RemoveRow(rowIndex).RemoveColumn(columnIndex);
-            double minor = minorMatrix.Determinant();
+            double minor = CalculateMinor(resultMatrix, rowIndex, columnIndex);
 
             groupBoxCalculationResult.Text = "Результат вычисления - минор элемента матрицы A равен:";
             ShowResultInDataGridView(minor, dataGridViewResult);
+        }
+
+        private double CalculateMinor(double[,] matrix, int rowIndex, int columnIndex)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+
+            double[,] minorMatrix = new double[rows - 1, columns - 1];
+
+            int minorRow = 0;
+            for (int i = 0; i < rows; i++)
+            {
+                if (i == rowIndex) continue;
+
+                int minorColumn = 0;
+                for (int j = 0; j < columns; j++)
+                {
+                    if (j == columnIndex) continue;
+
+                    minorMatrix[minorRow, minorColumn] = matrix[i, j];
+                    minorColumn++;
+                }
+                minorRow++;
+            }
+
+            double minorDeterminant = CalculateDeterminant(minorMatrix);
+            return minorDeterminant;
         }
 
         private void buttonMultiplyMatrixAByNumber_Click(object sender, EventArgs e)
