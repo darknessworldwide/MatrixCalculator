@@ -253,6 +253,8 @@ namespace MatrixCalculator
             int rowsA = dataGridViewMatrixA.RowCount;
             int columnsA = dataGridViewMatrixA.ColumnCount;
 
+            if (rowsA == 0 || columnsA == 0) return;
+
             double[,] resultMatrix = new double[rowsA, columnsA];
 
             for (int i = 0; i < rowsA; i++)
@@ -275,6 +277,8 @@ namespace MatrixCalculator
             int rowsA = dataGridViewMatrixA.RowCount;
             int columnsA = dataGridViewMatrixA.ColumnCount;
 
+            if (rowsA == 0 || columnsA == 0) return;
+
             double[,] resultMatrix = new double[rowsA, columnsA];
 
             for (int i = 0; i < rowsA; i++)
@@ -294,11 +298,13 @@ namespace MatrixCalculator
 
         private void buttonMinorMatrixA_Click(object sender, EventArgs e)
         {
-            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
-            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
-
             int rowsA = dataGridViewMatrixA.RowCount;
             int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            if (rowsA == 0 || columnsA == 0) return;
+
+            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
+            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
 
             double[,] resultMatrix = new double[rowsA, columnsA];
 
