@@ -289,11 +289,60 @@ namespace MatrixCalculator
                 }
             }
 
-            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
-            double determinantMatrixA = matrixA.Determinant();
+            double determinantMatrixA = CalculateDeterminant(resultMatrix);
 
             groupBoxCalculationResult.Text = "Результат вычисления - определитель матрицы A равен:";
             ShowResultInDataGridView(determinantMatrixA, dataGridViewResult);
+        }
+
+        private double CalculateDeterminant(double[,] matrix)
+        {
+            int n = matrix.GetLength(0);
+
+            if (n == 1) return matrix[0, 0];
+
+            double determinant = 1;
+
+            for (int i = 0; i < n; i++)
+            {
+                double maxElement = Math.Abs(matrix[i, i]);
+                int maxRow = i;
+                for (int k = i + 1; k < n; k++)
+                {
+                    if (Math.Abs(matrix[k, i]) > maxElement)
+                    {
+                        maxElement = Math.Abs(matrix[k, i]);
+                        maxRow = k;
+                    }
+                }
+
+                if (maxRow != i)
+                {
+                    for (int k = i; k < n; k++)
+                    {
+                        double temp = matrix[maxRow, k];
+                        matrix[maxRow, k] = matrix[i, k];
+                        matrix[i, k] = temp;
+                    }
+                    determinant *= -1;
+                }
+
+                for (int j = i + 1; j < n; j++)
+                {
+                    double ratio = matrix[j, i] / matrix[i, i];
+                    for (int k = i; k < n; k++)
+                    {
+                        matrix[j, k] -= ratio * matrix[i, k];
+                    }
+                }
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                determinant *= matrix[i, i];
+            }
+
+            return determinant;
         }
 
         private void buttonMinorMatrixA_Click(object sender, EventArgs e)
