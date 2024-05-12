@@ -266,11 +266,43 @@ namespace MatrixCalculator
                 }
             }
 
-            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
-            int rankMatrixA = matrixA.Rank();
+            int rankMatrixA = CalculateRank(resultMatrix);
 
             groupBoxCalculationResult.Text = "Результат вычисления - ранг матрицы A равен:";
             ShowResultInDataGridView(rankMatrixA, dataGridViewResult);
+        }
+
+        private int CalculateRank(double[,] matrix)
+        {
+            int rows = matrix.GetLength(0);
+            int columns = matrix.GetLength(1);
+            int rank = 0;
+
+            for (int i = 0; i < rows; i++)
+            {
+                bool foundPivot = false;
+                for (int j = 0; j < columns; j++)
+                {
+                    if (matrix[i, j] != 0)
+                    {
+                        foundPivot = true;
+                        rank++;
+
+                        for (int k = i + 1; k < rows; k++)
+                        {
+                            double ratio = matrix[k, j] / matrix[i, j];
+                            for (int l = j; l < columns; l++)
+                            {
+                                matrix[k, l] -= matrix[i, l] * ratio;
+                            }
+                        }
+                        break;
+                    }
+                }
+                if (!foundPivot) continue;
+            }
+
+            return rank;
         }
 
         private void buttonDeterminantMatrixA_Click(object sender, EventArgs e)
