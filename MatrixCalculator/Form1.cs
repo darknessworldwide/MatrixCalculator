@@ -136,7 +136,7 @@ namespace MatrixCalculator
             }
 
             groupBoxCalculationResult.Text = "Результат вычисления - сумма матриц A и B:";
-            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+            ShowResultInDataGridView(resultMatrix);
         }
 
         private void buttonSubtractMatrices_Click(object sender, EventArgs e)
@@ -165,7 +165,7 @@ namespace MatrixCalculator
             }
 
             groupBoxCalculationResult.Text = "Результат вычисления - разность матриц A и B:";
-            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+            ShowResultInDataGridView(resultMatrix);
         }
 
         private void buttonMultiplyMatrices_Click(object sender, EventArgs e)
@@ -197,7 +197,7 @@ namespace MatrixCalculator
             }
 
             groupBoxCalculationResult.Text = "Результат вычисления - произведение матриц A и B:";
-            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+            ShowResultInDataGridView(resultMatrix);
         }
 
         private void buttonInverseMatrixA_Click(object sender, EventArgs e)
@@ -214,11 +214,10 @@ namespace MatrixCalculator
                 }
             }
 
-            Matrix<double> matrixA = DenseMatrix.OfArray(resultMatrix);
-            Matrix<double> inverseMatrixA;
+            double[,] inverseMatrixA;
             try
             {
-                inverseMatrixA = matrixA.Inverse();
+                inverseMatrixA = CalculateInverse(resultMatrix);
             }
             catch (Exception ex)
             {
@@ -227,7 +226,12 @@ namespace MatrixCalculator
             }
 
             groupBoxCalculationResult.Text = "Результат вычисления - обратная матрице A, матрица:";
-            ShowResultInDataGridView(inverseMatrixA.ToArray(), dataGridViewResult);
+            ShowResultInDataGridView(inverseMatrixA);
+        }
+
+        private double[,] CalculateInverse(double[,] matrix)
+        {
+
         }
 
         private void buttonTransposeMatrixA_Click(object sender, EventArgs e)
@@ -246,7 +250,7 @@ namespace MatrixCalculator
             }
 
             groupBoxCalculationResult.Text = "Результат вычисления - транспонированная матрица A:";
-            ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+            ShowResultInDataGridView(resultMatrix);
         }
 
         private void buttonRankMatrixA_Click(object sender, EventArgs e)
@@ -266,16 +270,14 @@ namespace MatrixCalculator
                 }
             }
 
-            int rankMatrixA = CalculateRank(resultMatrix);
+            int rankMatrixA = CalculateRank(resultMatrix, rowsA, columnsA);
 
             groupBoxCalculationResult.Text = "Результат вычисления - ранг матрицы A равен:";
-            ShowResultInDataGridView(rankMatrixA, dataGridViewResult);
+            ShowResultInDataGridView(rankMatrixA);
         }
 
-        private int CalculateRank(double[,] matrix)
+        private int CalculateRank(double[,] matrix, int rows, int columns)
         {
-            int rows = matrix.GetLength(0);
-            int columns = matrix.GetLength(1);
             int rank = 0;
 
             for (int i = 0; i < rows; i++)
@@ -322,16 +324,14 @@ namespace MatrixCalculator
                 }
             }
 
-            double determinantMatrixA = CalculateDeterminant(resultMatrix);
+            double determinantMatrixA = CalculateDeterminant(resultMatrix, rowsA);
 
             groupBoxCalculationResult.Text = "Результат вычисления - определитель матрицы A равен:";
-            ShowResultInDataGridView(determinantMatrixA, dataGridViewResult);
+            ShowResultInDataGridView(determinantMatrixA);
         }
 
-        private double CalculateDeterminant(double[,] matrix)
+        private double CalculateDeterminant(double[,] matrix, int n)
         {
-            int n = matrix.GetLength(0);
-
             if (n == 1) return matrix[0, 0];
 
             double determinant = 1;
@@ -385,9 +385,6 @@ namespace MatrixCalculator
 
             if (rowsA == 0 || columnsA == 0) return;
 
-            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
-            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
-
             double[,] resultMatrix = new double[rowsA, columnsA];
 
             for (int i = 0; i < rowsA; i++)
@@ -398,16 +395,16 @@ namespace MatrixCalculator
                 }
             }
 
-            double minor = CalculateMinor(resultMatrix, rowIndex, columnIndex);
+            double minor = CalculateMinor(resultMatrix, rowsA, columnsA);
 
             groupBoxCalculationResult.Text = "Результат вычисления - минор элемента матрицы A равен:";
-            ShowResultInDataGridView(minor, dataGridViewResult);
+            ShowResultInDataGridView(minor);
         }
 
-        private double CalculateMinor(double[,] matrix, int rowIndex, int columnIndex)
+        private double CalculateMinor(double[,] matrix, int rows, int columns)
         {
-            int rows = matrix.GetLength(0);
-            int columns = matrix.GetLength(1);
+            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
+            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
 
             double[,] minorMatrix = new double[rows - 1, columns - 1];
 
@@ -427,7 +424,7 @@ namespace MatrixCalculator
                 minorRow++;
             }
 
-            double minorDeterminant = CalculateDeterminant(minorMatrix);
+            double minorDeterminant = CalculateDeterminant(minorMatrix, minorMatrix.GetLength(0));
             return minorDeterminant;
         }
 
@@ -448,34 +445,26 @@ namespace MatrixCalculator
                     {
                         for (int j = 0; j < columnsA; j++)
                         {
-                            resultMatrix[i, j] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value);
-                        }
-                    }
-
-                    for (int i = 0; i < rowsA; i++)
-                    {
-                        for (int j = 0; j < columnsA; j++)
-                        {
-                            resultMatrix[i, j] *= number;
+                            resultMatrix[i, j] = Convert.ToDouble(dataGridViewMatrixA.Rows[i].Cells[j].Value) * number;
                         }
                     }
 
                     groupBoxCalculationResult.Text = $"Результат вычисления - матрица A, умноженная на число {number}:";
-                    ShowResultInDataGridView(resultMatrix, dataGridViewResult);
+                    ShowResultInDataGridView(resultMatrix);
                 }
             }
         }
 
-        private void ShowResultInDataGridView<T>(T value, DataGridView destination)
+        private void ShowResultInDataGridView<T>(T value)
         {
             if (typeof(T) == typeof(int) || typeof(T) == typeof(double))
             {
-                destination.Rows.Clear();
-                destination.Columns.Clear();
+                dataGridViewResult.Rows.Clear();
+                dataGridViewResult.Columns.Clear();
 
-                destination.RowCount = 1;
-                destination.ColumnCount = 1;
-                destination.Rows[0].Cells[0].Value = value;
+                dataGridViewResult.RowCount = 1;
+                dataGridViewResult.ColumnCount = 1;
+                dataGridViewResult.Rows[0].Cells[0].Value = value;
             }
             else if (typeof(T) == typeof(double[,]))
             {
@@ -484,19 +473,19 @@ namespace MatrixCalculator
                 if (matrix.Length == 0)
                 {
                     groupBoxCalculationResult.Text = "Результат вычисления -";
-                    destination.Rows.Clear();
-                    destination.Columns.Clear();
+                    dataGridViewResult.Rows.Clear();
+                    dataGridViewResult.Columns.Clear();
                     return;
                 }
 
-                destination.RowCount = matrix.GetLength(0);
-                destination.ColumnCount = matrix.GetLength(1);
+                dataGridViewResult.RowCount = matrix.GetLength(0);
+                dataGridViewResult.ColumnCount = matrix.GetLength(1);
 
-                for (int i = 0; i < destination.RowCount; i++)
+                for (int i = 0; i < dataGridViewResult.RowCount; i++)
                 {
-                    for (int j = 0; j < destination.ColumnCount; j++)
+                    for (int j = 0; j < dataGridViewResult.ColumnCount; j++)
                     {
-                        destination.Rows[i].Cells[j].Value = Math.Round(matrix[i, j], 3);
+                        dataGridViewResult.Rows[i].Cells[j].Value = Math.Round(matrix[i, j], 3);
                     }
                 }
             }

@@ -17,7 +17,8 @@ namespace MatrixCalculator
         public Form2()
         {
             InitializeComponent();
-            Number = 0;
+            Number = 1;
+            numericUpDownMultiplyByNumber.Minimum = Decimal.MinValue;
             numericUpDownMultiplyByNumber.Maximum = Decimal.MaxValue;
         }
 
