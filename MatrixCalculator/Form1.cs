@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -117,6 +118,7 @@ namespace MatrixCalculator
             int rowsB = dataGridViewMatrixB.RowCount;
             int columnsB = dataGridViewMatrixB.ColumnCount;
 
+            if (rowsA == 0 || columnsA == 0 || rowsB == 0 || columnsB == 0) return;
             if (rowsA != rowsB || columnsA != columnsB)
             {
                 MessageBox.Show("Размеры матриц не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -146,6 +148,7 @@ namespace MatrixCalculator
             int rowsB = dataGridViewMatrixB.RowCount;
             int columnsB = dataGridViewMatrixB.ColumnCount;
 
+            if (rowsA == 0 || columnsA == 0 || rowsB == 0 || columnsB == 0) return;
             if (rowsA != rowsB || columnsA != columnsB)
             {
                 MessageBox.Show("Размеры матриц не совпадают!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -175,6 +178,7 @@ namespace MatrixCalculator
             int rowsB = dataGridViewMatrixB.RowCount;
             int columnsB = dataGridViewMatrixB.ColumnCount;
 
+            if (rowsA == 0 || columnsA == 0 || rowsB == 0 || columnsB == 0) return;
             if (columnsA != rowsB)
             {
                 MessageBox.Show("Количество столбцов матрицы A не совпадает с количеством строк матрицы B!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
@@ -256,7 +260,7 @@ namespace MatrixCalculator
             {
                 for (int j = 0; j < n; j++)
                 {
-                    adjugate[i, j] *= Math.Pow(-1, i + j); /*CalculateMinor(minorMatrix, n, n, i, j);*/
+                    adjugate[i, j] = minorMatrix[i, j] * Math.Pow(-1, i + j); /*CalculateMinor(minorMatrix, n, n, i, j);*/
                 }
             }
 
@@ -265,19 +269,19 @@ namespace MatrixCalculator
             {
                 for (int j = 0; j < n; j++)
                 {
-                    resultMatrix[j, i] = adjugate[i, j];
+                    resultMatrix[j, i] = adjugate[i, j] * 1 / determinant;
                 }
             }
 
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    resultMatrix[i, j] *= 1 / determinant;
-                }
-            }
+            //for (int i = 0; i < n; i++)
+            //{
+            //    for (int j = 0; j < n; j++)
+            //    {
+            //        resultMatrix[i, j] *= 1 / determinant;
+            //    }
+            //}
 
-            MessageBox.Show($"detA = {determinant} \nminorMatrix = {minorMatrix[0, 0]} {minorMatrix[0, 1]} \n{minorMatrix[1, 0]} {minorMatrix[1, 1]} \nadjugateMatrix = {adjugate[0, 0]} {adjugate[0, 1]} \n{adjugate[1, 0]} {adjugate[1, 1]} \nобратнаяМатрица = {resultMatrix[0, 0]} {adjugate[1, 0]} \n{resultMatrix[1, 0]} {adjugate[1, 1]}");
+            MessageBox.Show($"Определитель = {determinant} \nМатрица миноров = {minorMatrix[0, 0]} {minorMatrix[0, 1]} \n{minorMatrix[1, 0]} {minorMatrix[1, 1]} \nМатрица алгебраических дополнений = {adjugate[0, 0]} {adjugate[0, 1]} \n{adjugate[1, 0]} {adjugate[1, 1]} \nОбратная матрица = {resultMatrix[0, 0]} {adjugate[1, 0]} \n{resultMatrix[1, 0]} {adjugate[1, 1]}");
             return resultMatrix;
         }
 
@@ -285,6 +289,8 @@ namespace MatrixCalculator
         {
             int rowsA = dataGridViewMatrixA.RowCount;
             int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            if (rowsA == 0 || columnsA == 0) return;
 
             double[,] resultMatrix = new double[columnsA, rowsA];
 
@@ -477,14 +483,16 @@ namespace MatrixCalculator
 
         private void buttonMultiplyMatrixAByNumber_Click(object sender, EventArgs e)
         {
+            int rowsA = dataGridViewMatrixA.RowCount;
+            int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            if (rowsA == 0 || columnsA == 0) return;
+
             using (var form2 = new Form2())
             {
                 if (form2.ShowDialog() == DialogResult.OK)
                 {
                     double number = form2.Number;
-
-                    int rowsA = dataGridViewMatrixA.RowCount;
-                    int columnsA = dataGridViewMatrixA.ColumnCount;
 
                     double[,] resultMatrix = new double[rowsA, columnsA];
 
@@ -519,7 +527,7 @@ namespace MatrixCalculator
 
                 if (matrix.Length == 0)
                 {
-                    groupBoxCalculationResult.Text = "Результат вычисления -";
+                    groupBoxCalculationResult.Text = "Результат вычисления";
                     dataGridViewResult.Rows.Clear();
                     dataGridViewResult.Columns.Clear();
                     return;

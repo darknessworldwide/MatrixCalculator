@@ -368,7 +368,7 @@
             this.groupBoxCalculationResult.Size = new System.Drawing.Size(374, 209);
             this.groupBoxCalculationResult.TabIndex = 4;
             this.groupBoxCalculationResult.TabStop = false;
-            this.groupBoxCalculationResult.Text = "Результат вычисления -";
+            this.groupBoxCalculationResult.Text = "Результат вычисления";
             // 
             // dataGridViewResult
             // 
@@ -425,7 +425,6 @@
             this.buttonArrowLeft.Name = "buttonArrowLeft";
             this.buttonArrowLeft.Size = new System.Drawing.Size(28, 28);
             this.buttonArrowLeft.TabIndex = 8;
-            this.buttonArrowLeft.UseVisualStyleBackColor = true;
             this.buttonArrowLeft.Click += new System.EventHandler(this.ButtonArrowLeft_Click);
             // 
             // buttonExit
@@ -439,7 +438,6 @@
             this.buttonExit.TabIndex = 5;
             this.buttonExit.Text = "Выход";
             this.buttonExit.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
-            this.buttonExit.UseVisualStyleBackColor = true;
             this.buttonExit.Click += new System.EventHandler(this.buttonExit_Click);
             // 
             // Form1
