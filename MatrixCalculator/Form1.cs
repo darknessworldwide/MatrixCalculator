@@ -243,46 +243,22 @@ namespace MatrixCalculator
 
         private double[,] CalculateInverse(double[,] matrix, int n)
         {
-            double determinant = CalculateDeterminant(matrix, n);
+            double determinant = CalculateDeterminant(matrix);
             if (determinant == 0) throw new InvalidOperationException("Определитель матрицы равен нулю - обратной матрицы не существует");
 
+            double[,] inverseMatrix = new double[n, n];
             double[,] minorMatrix = new double[n, n];
+
             for (int i = 0; i < n; i++)
             {
                 for (int j = 0; j < n; j++)
                 {
-                    minorMatrix[i, j] = CalculateMinor(matrix, n, n, i, j);
+                    minorMatrix[i, j] = CalculateMinor(matrix, i, j);
+                    inverseMatrix[j, i] = minorMatrix[i, j] * Math.Pow(-1, i + j) / determinant;
                 }
             }
 
-            double[,] adjugate = new double[n, n];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    adjugate[i, j] = minorMatrix[i, j] * Math.Pow(-1, i + j); /*CalculateMinor(minorMatrix, n, n, i, j);*/
-                }
-            }
-
-            double[,] resultMatrix = new double[n, n];
-            for (int i = 0; i < n; i++)
-            {
-                for (int j = 0; j < n; j++)
-                {
-                    resultMatrix[j, i] = adjugate[i, j] * 1 / determinant;
-                }
-            }
-
-            //for (int i = 0; i < n; i++)
-            //{
-            //    for (int j = 0; j < n; j++)
-            //    {
-            //        resultMatrix[i, j] *= 1 / determinant;
-            //    }
-            //}
-
-            MessageBox.Show($"Определитель = {determinant} \nМатрица миноров = {minorMatrix[0, 0]} {minorMatrix[0, 1]} \n{minorMatrix[1, 0]} {minorMatrix[1, 1]} \nМатрица алгебраических дополнений = {adjugate[0, 0]} {adjugate[0, 1]} \n{adjugate[1, 0]} {adjugate[1, 1]} \nОбратная матрица = {resultMatrix[0, 0]} {adjugate[1, 0]} \n{resultMatrix[1, 0]} {adjugate[1, 1]}");
-            return resultMatrix;
+            return inverseMatrix;
         }
 
         private void buttonTransposeMatrixA_Click(object sender, EventArgs e)
@@ -377,58 +353,48 @@ namespace MatrixCalculator
                 }
             }
 
-            double determinantMatrixA = CalculateDeterminant(resultMatrix, rowsA);
+            double determinantMatrixA = CalculateDeterminant(resultMatrix);
 
             groupBoxCalculationResult.Text = "Результат вычисления - определитель матрицы A равен:";
             ShowResultInDataGridView(determinantMatrixA);
         }
 
-        private double CalculateDeterminant(double[,] matrix, int n)
+        private double CalculateDeterminant(double[,] matrix)
         {
+            int n = matrix.GetLength(0);
             if (n == 1) return matrix[0, 0];
 
-            double determinant = 1;
+            double determinant = 0;
 
             for (int i = 0; i < n; i++)
             {
-                double maxElement = Math.Abs(matrix[i, i]);
-                int maxRow = i;
-                for (int k = i + 1; k < n; k++)
-                {
-                    if (Math.Abs(matrix[k, i]) > maxElement)
-                    {
-                        maxElement = Math.Abs(matrix[k, i]);
-                        maxRow = k;
-                    }
-                }
-
-                if (maxRow != i)
-                {
-                    for (int k = i; k < n; k++)
-                    {
-                        double temp = matrix[maxRow, k];
-                        matrix[maxRow, k] = matrix[i, k];
-                        matrix[i, k] = temp;
-                    }
-                    determinant *= -1;
-                }
-
-                for (int j = i + 1; j < n; j++)
-                {
-                    double ratio = matrix[j, i] / matrix[i, i];
-                    for (int k = i; k < n; k++)
-                    {
-                        matrix[j, k] -= ratio * matrix[i, k];
-                    }
-                }
-            }
-
-            for (int i = 0; i < n; i++)
-            {
-                determinant *= matrix[i, i];
+                double[,] submatrix = GetSubmatrix(matrix, 0, i);
+                determinant += Math.Pow(-1, i) * matrix[0, i] * CalculateDeterminant(submatrix);
             }
 
             return determinant;
+        }
+
+        private double[,] GetSubmatrix(double[,] matrix, int excludingRow, int excludingCol)
+        {
+            int n = matrix.GetLength(0);
+            double[,] submatrix = new double[n - 1, n - 1];
+            int r = -1;
+
+            for (int i = 0; i < n; i++)
+            {
+                if (i == excludingRow) continue;
+                r++;
+                int c = -1;
+
+                for (int j = 0; j < n; j++)
+                {
+                    if (j == excludingCol) continue;
+                    submatrix[r, ++c] = matrix[i, j];
+                }
+            }
+
+            return submatrix;
         }
 
         private void buttonMinorMatrixA_Click(object sender, EventArgs e)
@@ -451,34 +417,16 @@ namespace MatrixCalculator
             int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
             int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
 
-            double minor = CalculateMinor(resultMatrix, rowsA, columnsA, rowIndex, columnIndex);
+            double minor = CalculateMinor(resultMatrix, rowIndex, columnIndex);
 
             groupBoxCalculationResult.Text = "Результат вычисления - минор элемента матрицы A равен:";
             ShowResultInDataGridView(minor);
         }
 
-        private double CalculateMinor(double[,] matrix, int rows, int columns, int rowIndex, int columnIndex)
+        private double CalculateMinor(double[,] matrix, int rowIndex, int columnIndex)
         {
-            double[,] minorMatrix = new double[rows - 1, columns - 1];
-
-            int minorRow = 0;
-            for (int i = 0; i < rows; i++)
-            {
-                if (i == rowIndex) continue;
-
-                int minorColumn = 0;
-                for (int j = 0; j < columns; j++)
-                {
-                    if (j == columnIndex) continue;
-
-                    minorMatrix[minorRow, minorColumn] = matrix[i, j];
-                    minorColumn++;
-                }
-                minorRow++;
-            }
-
-            double minorDeterminant = CalculateDeterminant(minorMatrix, minorMatrix.GetLength(0));
-            return minorDeterminant;
+            double[,] submatrix = GetSubmatrix(matrix, rowIndex, columnIndex);
+            return CalculateDeterminant(submatrix);
         }
 
         private void buttonMultiplyMatrixAByNumber_Click(object sender, EventArgs e)
