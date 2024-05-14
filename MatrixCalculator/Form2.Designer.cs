@@ -40,6 +40,11 @@
             this.numericUpDownMultiplyByNumber.Name = "numericUpDownMultiplyByNumber";
             this.numericUpDownMultiplyByNumber.Size = new System.Drawing.Size(120, 20);
             this.numericUpDownMultiplyByNumber.TabIndex = 0;
+            this.numericUpDownMultiplyByNumber.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // buttonOK
             // 
@@ -47,7 +52,7 @@
             this.buttonOK.Name = "buttonOK";
             this.buttonOK.Size = new System.Drawing.Size(75, 23);
             this.buttonOK.TabIndex = 1;
-            this.buttonOK.Text = "Ок";
+            this.buttonOK.Text = "ОК";
             this.buttonOK.UseVisualStyleBackColor = true;
             this.buttonOK.Click += new System.EventHandler(this.buttonOK_Click);
             // 

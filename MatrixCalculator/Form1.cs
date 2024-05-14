@@ -204,6 +204,14 @@ namespace MatrixCalculator
         {
             int rowsA = dataGridViewMatrixA.RowCount;
             int columnsA = dataGridViewMatrixA.ColumnCount;
+
+            if (rowsA == 0 || columnsA == 0) return;
+            if (rowsA != columnsA)
+            {
+                MessageBox.Show("Матрица должна быть квадратной!", "Ошибка", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                return;
+            }
+
             double[,] resultMatrix = new double[rowsA, columnsA];
 
             for (int i = 0; i < rowsA; i++)
@@ -217,7 +225,7 @@ namespace MatrixCalculator
             double[,] inverseMatrixA;
             try
             {
-                inverseMatrixA = CalculateInverse(resultMatrix);
+                inverseMatrixA = CalculateInverse(resultMatrix, rowsA);
             }
             catch (Exception ex)
             {
@@ -229,9 +237,48 @@ namespace MatrixCalculator
             ShowResultInDataGridView(inverseMatrixA);
         }
 
-        private double[,] CalculateInverse(double[,] matrix)
+        private double[,] CalculateInverse(double[,] matrix, int n)
         {
+            double determinant = CalculateDeterminant(matrix, n);
+            if (determinant == 0) throw new InvalidOperationException("Определитель матрицы равен нулю - обратной матрицы не существует");
 
+            double[,] minorMatrix = new double[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    minorMatrix[i, j] = CalculateMinor(matrix, n, n, i, j);
+                }
+            }
+
+            double[,] adjugate = new double[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    adjugate[i, j] *= Math.Pow(-1, i + j); /*CalculateMinor(minorMatrix, n, n, i, j);*/
+                }
+            }
+
+            double[,] resultMatrix = new double[n, n];
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    resultMatrix[j, i] = adjugate[i, j];
+                }
+            }
+
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    resultMatrix[i, j] *= 1 / determinant;
+                }
+            }
+
+            MessageBox.Show($"detA = {determinant} \nminorMatrix = {minorMatrix[0, 0]} {minorMatrix[0, 1]} \n{minorMatrix[1, 0]} {minorMatrix[1, 1]} \nadjugateMatrix = {adjugate[0, 0]} {adjugate[0, 1]} \n{adjugate[1, 0]} {adjugate[1, 1]} \nобратнаяМатрица = {resultMatrix[0, 0]} {adjugate[1, 0]} \n{resultMatrix[1, 0]} {adjugate[1, 1]}");
+            return resultMatrix;
         }
 
         private void buttonTransposeMatrixA_Click(object sender, EventArgs e)
@@ -395,17 +442,17 @@ namespace MatrixCalculator
                 }
             }
 
-            double minor = CalculateMinor(resultMatrix, rowsA, columnsA);
+            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
+            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
+
+            double minor = CalculateMinor(resultMatrix, rowsA, columnsA, rowIndex, columnIndex);
 
             groupBoxCalculationResult.Text = "Результат вычисления - минор элемента матрицы A равен:";
             ShowResultInDataGridView(minor);
         }
 
-        private double CalculateMinor(double[,] matrix, int rows, int columns)
+        private double CalculateMinor(double[,] matrix, int rows, int columns, int rowIndex, int columnIndex)
         {
-            int rowIndex = dataGridViewMatrixA.CurrentCell.RowIndex;
-            int columnIndex = dataGridViewMatrixA.CurrentCell.ColumnIndex;
-
             double[,] minorMatrix = new double[rows - 1, columns - 1];
 
             int minorRow = 0;
