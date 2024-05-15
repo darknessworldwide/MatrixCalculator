@@ -368,8 +368,7 @@ namespace MatrixCalculator
 
             for (int i = 0; i < n; i++)
             {
-                double[,] submatrix = GetSubmatrix(matrix, 0, i);
-                determinant += Math.Pow(-1, i) * matrix[0, i] * CalculateDeterminant(submatrix);
+                determinant += Math.Pow(-1, i) * matrix[0, i] * CalculateMinor(matrix, 0, i);
             }
 
             return determinant;
@@ -379,8 +378,8 @@ namespace MatrixCalculator
         {
             int n = matrix.GetLength(0);
             double[,] submatrix = new double[n - 1, n - 1];
+            
             int r = -1;
-
             for (int i = 0; i < n; i++)
             {
                 if (i == excludingRow) continue;
